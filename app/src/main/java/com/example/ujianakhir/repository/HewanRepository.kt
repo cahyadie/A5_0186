@@ -39,9 +39,9 @@ class NetworkHewanRepository(
         }
     }
 
-    override suspend fun getHewan(): List<Hewan> = hewanApiService.getHewan().data
+    override suspend fun getHewan(): List<Hewan> = hewanApiService.getHewan()
     override suspend fun getHewanById(idhewan: String): Hewan {
-        return hewanApiService.getHewanById("idhewan").data
+        return hewanApiService.getHewanById(idhewan)
     }
 
 }
