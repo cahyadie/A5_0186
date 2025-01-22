@@ -18,7 +18,7 @@ interface HewanService {
     suspend fun getHewan(): List<Hewan>
 
     @GET("get1hewan.php")
-    suspend fun getHewanById(@Query("id_hewan") idhewan: String): Hewan
+    suspend fun getHewanById(@Query("id_hewan") id_hewan: String): Hewan
 
     @POST("inserthewan.php")
     suspend fun insertHewan(@Body hewan: Hewan)
