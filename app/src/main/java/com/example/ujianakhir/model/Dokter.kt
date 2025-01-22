@@ -10,17 +10,3 @@ data class Dokter(
     val spesialisasi: String,
     val kontak: String,
 )
-
-@Serializable
-data class DokterDetailResponse(
-    val status: Boolean,
-    val message: String,
-    val data: Dokter
-)
-
-@Serializable
-data class DokterResponse(
-    val status: Boolean,
-    val message: String,
-    val data: List<Dokter>
-)

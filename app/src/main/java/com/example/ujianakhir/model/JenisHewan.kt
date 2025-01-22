@@ -11,17 +11,3 @@ data class JenisHewan(
     val deskripsi: String,
 )
 
-
-@Serializable
-data class JenisHewanDetailResponse(
-    val status: Boolean,
-    val message: String,
-    val data: JenisHewan
-)
-
-@Serializable
-data class JenisHewanResponse(
-    val status: Boolean,
-    val message: String,
-    val data: List<JenisHewan>
-)

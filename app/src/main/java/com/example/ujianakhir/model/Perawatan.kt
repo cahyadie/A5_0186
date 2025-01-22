@@ -12,16 +12,3 @@ data class Perawatan(
 )
 
 
-@Serializable
-data class PerawatanDetailResponse(
-    val status: Boolean,
-    val message: String,
-    val data: Perawatan
-)
-
-@Serializable
-data class PerawatanResponse(
-    val status: Boolean,
-    val message: String,
-    val data: List<Perawatan>
-)
