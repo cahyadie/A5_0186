@@ -18,8 +18,8 @@ sealed class HomeUiState{
     object Loading: HomeUiState()
 }
 
-class HomeHewanViewModel(private val mhs: HewanRepository): ViewModel(){
-    var mhsUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
+class HomeHewanViewModel(private val hwn: HewanRepository): ViewModel(){
+    var hwnUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
         private set
 
     init{
@@ -28,9 +28,9 @@ class HomeHewanViewModel(private val mhs: HewanRepository): ViewModel(){
 
     fun getHewan(){
         viewModelScope.launch {
-            mhsUIState = HomeUiState.Loading
-            mhsUIState = try{
-                HomeUiState.Success(mhs.getHewan())
+            hwnUIState = HomeUiState.Loading
+            hwnUIState = try{
+                HomeUiState.Success(hwn.getHewan())
             }catch (e: IOException){
                 HomeUiState.Error
             }catch (e: HttpException){
@@ -42,7 +42,7 @@ class HomeHewanViewModel(private val mhs: HewanRepository): ViewModel(){
     fun deleteHewan(idhewan: String){
         viewModelScope.launch {
             try {
-                mhs.deleteHewan(idhewan)
+                hwn.deleteHewan(idhewan)
             } catch (e: IOException) {
                 HomeUiState.Error
             } catch (e: HttpException) {

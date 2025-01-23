@@ -83,7 +83,7 @@ fun HomeScreenHewan(
         },
     ){innerPadding ->
         HomeStatusHewan(
-            homeUiState = viewModel.mhsUIState,
+            homeUiState = viewModel.hwnUIState,
             retryAction = {viewModel.getHewan()}, modifier = Modifier.padding(innerPadding),
             onDetailClick = onDetailClick, onDeleteClick = {
                 viewModel.deleteHewan(it.idhewan)

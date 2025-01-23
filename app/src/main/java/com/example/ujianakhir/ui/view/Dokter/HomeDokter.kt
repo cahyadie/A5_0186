@@ -83,7 +83,7 @@ fun HomeScreenDokter(
         },
     ){innerPadding ->
         HomeStatusDokter(
-            homeUiState = viewModel.mhsUIState,
+            homeUiState = viewModel.dktrUIState,
             retryAction = {viewModel.getdokter()}, modifier = Modifier.padding(innerPadding),
             onDetailClick = onDetailClick, onDeleteClick = {
                 viewModel.deleteDokter(it.iddokter)

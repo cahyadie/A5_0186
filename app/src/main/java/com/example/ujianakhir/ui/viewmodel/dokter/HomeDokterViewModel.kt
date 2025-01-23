@@ -19,7 +19,7 @@ sealed class HomeUiState{
 }
 
 class HomeDokterViewModel(private val dktr: DokterRepository): ViewModel(){
-    var mhsUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
+    var dktrUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
         private set
 
     init{
@@ -28,8 +28,8 @@ class HomeDokterViewModel(private val dktr: DokterRepository): ViewModel(){
 
     fun getdokter(){
         viewModelScope.launch {
-            mhsUIState = HomeUiState.Loading
-            mhsUIState = try{
+            dktrUIState = HomeUiState.Loading
+            dktrUIState = try{
                 HomeUiState.Success(dktr.getDokter())
             }catch (e: IOException){
                 HomeUiState.Error

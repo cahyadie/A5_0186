@@ -81,7 +81,7 @@ fun HomeScreenJenisHewan(
         },
     ){innerPadding ->
         HomeStatusJenisHewan(
-            homeUiState = viewModel.mhsUIState,
+            homeUiState = viewModel.jnshwnUIState,
             retryAction = {viewModel.getJenisHewan()}, modifier = Modifier.padding(innerPadding),
             onDetailClick = onDetailClick, onDeleteClick = {
                 viewModel.deleteJenisHewan(it.jenishewanid)

@@ -18,7 +18,7 @@ sealed class HomeUiState{
 }
 
 class HomeJenisHewanViewModel(private val jnshwn: JenisHewanRepository): ViewModel(){
-    var mhsUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
+    var jnshwnUIState: HomeUiState by mutableStateOf(HomeUiState.Loading)
         private set
 
     init{
@@ -27,8 +27,8 @@ class HomeJenisHewanViewModel(private val jnshwn: JenisHewanRepository): ViewMod
 
     fun getJenisHewan(){
         viewModelScope.launch {
-            mhsUIState = HomeUiState.Loading
-            mhsUIState = try{
+            jnshwnUIState = HomeUiState.Loading
+            jnshwnUIState = try{
                 HomeUiState.Success(jnshwn.getJenisHewan())
             }catch (e: IOException){
                 HomeUiState.Error
