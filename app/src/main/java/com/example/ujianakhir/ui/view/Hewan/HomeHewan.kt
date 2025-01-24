@@ -64,7 +64,7 @@ fun HomeScreenHewan(
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiHomeHewan.titleRes,
-                canNavigateBack = false,
+                canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack,
                 onRefresh = {

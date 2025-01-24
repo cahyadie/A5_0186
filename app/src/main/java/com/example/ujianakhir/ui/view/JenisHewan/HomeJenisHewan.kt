@@ -52,6 +52,7 @@ object DestinasiHomeJenisHewan : DestinasiNavigasi {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenJenisHewan(
+    navigateBackJenis: () -> Unit,
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
@@ -63,8 +64,9 @@ fun HomeScreenJenisHewan(
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiHomeJenisHewan.titleRes,
-                canNavigateBack = false,
+                canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
+                navigateUp = navigateBackJenis,
                 onRefresh = {
                     viewModel.getJenisHewan()
                 }

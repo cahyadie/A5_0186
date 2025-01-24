@@ -54,7 +54,9 @@ object DestinasiHomeDokter : DestinasiNavigasi {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenDokter(
+    navigateBackDktr: () -> Unit,
     navigateToItemEntry: () -> Unit,
+    navigateToEntryPrwt: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     viewModel: HomeDokterViewModel = viewModel(factory = PenyediaViewModel.Factory)
@@ -65,20 +67,40 @@ fun HomeScreenDokter(
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiHomeDokter.titleRes,
-                canNavigateBack = false,
+                canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
+                navigateUp = navigateBackDktr,
                 onRefresh = {
                     viewModel.getdokter()
                 }
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = navigateToItemEntry,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(18.dp)
-            ){
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Dokter")
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(18.dp), // Mengatur jarak dari tepi layar
+                contentAlignment = Alignment.BottomEnd // Menempatkan di kanan bawah
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp), // Jarak horizontal antar tombol
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 8.dp) // Mengatur jarak dari bawah
+                ) {
+                    Button(
+                        onClick = navigateToItemEntry,
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Text(text = "Add Dokter")
+                    }
+
+                    Button(
+                        onClick = navigateToEntryPrwt,
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Text(text = "Add Perawatan")
+                    }
+                }
             }
         },
     ){innerPadding ->
@@ -166,7 +188,6 @@ fun DktrLayout(
         items(dokter) { dokter ->
             DokterCard(
                 dokter = dokter,
-                perawatan = Perawatan.Companion,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onDetailClick(dokter)},
@@ -181,7 +202,6 @@ fun DktrLayout(
 @Composable
 fun DokterCard(
     dokter: Dokter,
-    perawatan: Perawatan.Companion,
     modifier: Modifier = Modifier,
     onDeleteClick: (Dokter) -> Unit ={}
 ){
@@ -209,10 +229,6 @@ fun DokterCard(
                         contentDescription = null,
                     )
                 }
-                Text(
-                    text = dokter.iddokter,
-                    style = MaterialTheme.typography.titleMedium
-                )
             }
             Text(
                 text = dokter.spesialisasi,
@@ -222,7 +238,6 @@ fun DokterCard(
                 text = dokter.kontak,
                 style = MaterialTheme.typography.titleMedium,
             )
-
         }
     }
 }
