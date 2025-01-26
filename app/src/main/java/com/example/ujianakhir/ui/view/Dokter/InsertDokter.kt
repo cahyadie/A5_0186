@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 object DestinasiEntryDokter : DestinasiNavigasi {
     override val route = "item_entrydokter"
-    override val titleRes = "Entry Dktr"
+    override val titleRes = "Insert Dokter"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

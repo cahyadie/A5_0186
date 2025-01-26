@@ -1,12 +1,18 @@
 package com.example.ujianakhir.ui.view.Hewan
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -14,11 +20,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ujianakhir.model.JenisHewan
 import com.example.ujianakhir.ui.navigasi.DestinasiNavigasi
 import com.example.ujianakhir.ui.viewmodel.hewan.InsertHewanViewModel
 import com.example.ujianakhir.ui.viewmodel.hewan.InsertUiEvent
@@ -30,7 +41,7 @@ import kotlinx.coroutines.launch
 
 object DestinasiEntryHewan : DestinasiNavigasi {
     override val route = "item_entryhewan"
-    override val titleRes = "Entry Hwn"
+    override val titleRes = "Insert Hewan"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +67,7 @@ fun EntryHwnScreen(
         EntryBody(
             insertUiState = viewmodel.uiState,
             onHewanValueChange = viewmodel::updtaeInsertHwnState,
+            jnsList = viewmodel.jnsListInsert,
             onSaveClick = {
                 coroutineScope.launch {
                     viewmodel.insertHwn()
@@ -75,7 +87,9 @@ fun EntryBody(
     insertUiState: InsertUiState,
     onHewanValueChange: (InsertUiEvent) -> Unit,
     onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    jnsList: List<String> = emptyList()
+
 ){
     Column(
         verticalArrangement = Arrangement.spacedBy(18.dp),
@@ -84,6 +98,7 @@ fun EntryBody(
         FormInput(
             insertUiEvent = insertUiState.insertUiEvent,
             onValueChange = onHewanValueChange,
+            jnsList = jnsList,
             modifier = Modifier.fillMaxWidth()
         )
         Button(
@@ -102,8 +117,12 @@ fun FormInput(
     insertUiEvent: InsertUiEvent,
     modifier: Modifier = Modifier,
     onValueChange: (InsertUiEvent) -> Unit ={},
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    jnsList: List<String> = emptyList()
 ){
+    var expanded by remember { mutableStateOf(false) }
+    var selectedJenis by remember { mutableStateOf("") }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -124,14 +143,39 @@ fun FormInput(
             enabled = enabled,
             singleLine = true
         )
-        OutlinedTextField(
-            value = insertUiEvent.jenishewanid,
-            onValueChange = {onValueChange(insertUiEvent.copy(jenishewanid = it))},
-            label = { Text("jenishewanid") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true
-        )
+        Box(modifier = Modifier.fillMaxWidth()) {
+            OutlinedTextField(
+                value = selectedJenis,
+                onValueChange = {},
+                label = { Text("Jenis Hewan") },
+                readOnly = true,
+                modifier = Modifier.fillMaxWidth(),
+                trailingIcon = {
+                    androidx.compose.material3.Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.clickable { expanded = true }
+                    )
+                }
+            )
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                jnsList.forEach { jenis ->
+                    DropdownMenuItem(
+                        text = { Text(jenis) },
+                        onClick = {
+                            selectedJenis = jenis
+                            onValueChange(insertUiEvent.copy(jenishewanid = jenis))
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+
         OutlinedTextField(
             value = insertUiEvent.kontakpemilik,
             onValueChange = {onValueChange(insertUiEvent.copy(kontakpemilik = it))},
