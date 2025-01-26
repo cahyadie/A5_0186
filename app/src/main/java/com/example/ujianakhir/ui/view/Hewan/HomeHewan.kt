@@ -31,6 +31,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,9 +40,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ujianakhir.R
 import com.example.ujianakhir.model.Hewan
 import com.example.ujianakhir.ui.navigasi.DestinasiNavigasi
+import com.example.ujianakhir.ui.viewmodel.PenyediaViewModel
 import com.example.ujianakhir.ui.viewmodel.hewan.HomeHewanViewModel
 import com.example.ujianakhir.ui.viewmodel.hewan.HomeUiState
-import com.example.ujianakhir.ui.viewmodel.PenyediaViewModel
 import com.example.ujianakhir.ui.widget.CostumeTopAppBar
 
 object DestinasiHomeHewan : DestinasiNavigasi {
@@ -56,7 +57,7 @@ fun HomeScreenHewan(
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
-    viewModel: HomeHewanViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    viewModel: HomeHewanViewModel = viewModel(factory = PenyediaViewModel.Factory),
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
@@ -76,7 +77,10 @@ fun HomeScreenHewan(
             FloatingActionButton(
                 onClick = navigateToItemEntry,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(18.dp)
+                modifier = Modifier.padding(18.dp),
+                containerColor = Color(0xFF126E6E),
+                contentColor = Color.White
+
             ){
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Hewan")
             }
@@ -99,7 +103,7 @@ fun HomeStatusHewan(
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     onDeleteClick: (Hewan) -> Unit = {},
-    onDetailClick: (String) -> Unit
+    onDetailClick: (String) -> Unit,
 ){
     when(homeUiState) {
         is HomeUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
@@ -156,7 +160,7 @@ fun HwnLayout(
     hewan: List<Hewan>,
     modifier: Modifier = Modifier,
     onDetailClick: (Hewan) -> Unit,
-    onDeleteClick: (Hewan) -> Unit = {}
+    onDeleteClick: (Hewan) -> Unit = {},
 ){
     LazyColumn(
         modifier = modifier,
@@ -168,7 +172,7 @@ fun HwnLayout(
                 hewan = hewan,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onDetailClick(hewan)},
+                    .clickable { onDetailClick(hewan) },
                 onDeleteClick = {
                     onDeleteClick(hewan)
                 }
@@ -181,7 +185,7 @@ fun HwnLayout(
 fun HewanCard(
     hewan: Hewan,
     modifier: Modifier = Modifier,
-    onDeleteClick: (Hewan) -> Unit ={}
+    onDeleteClick: (Hewan) -> Unit = {},
 ){
     Card(
         modifier = modifier,
