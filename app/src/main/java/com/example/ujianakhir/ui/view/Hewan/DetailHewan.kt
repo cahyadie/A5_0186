@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,7 +43,6 @@ import com.example.ujianakhir.ui.navigasi.DestinasiNavigasi
 import com.example.ujianakhir.ui.viewmodel.PenyediaViewModel
 import com.example.ujianakhir.ui.viewmodel.hewan.DetailHewanViewModel
 import com.example.ujianakhir.ui.viewmodel.hewan.DetailhwnUiState
-import kotlinx.coroutines.launch
 
 object DestinasiDetailHewan : DestinasiNavigasi {
     override val route = "detail_Hewan"
@@ -56,6 +54,7 @@ object DestinasiDetailHewan : DestinasiNavigasi {
 fun DetailHewanScreen(
     navigateBack: () -> Unit,
     idhewan: String,
+    navigateToEntryPrwt: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailHewanViewModel = viewModel(factory = PenyediaViewModel.Factory),
     navController: NavHostController
@@ -108,6 +107,12 @@ fun DetailHewanScreen(
                         containerColor = Color.Red
                     ) {
                         Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Hewan")
+                    }
+                    Button(
+                        onClick = navigateToEntryPrwt,
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Text(text = "Add Perawatan")
                     }
                 }
             }
