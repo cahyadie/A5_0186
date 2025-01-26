@@ -6,15 +6,49 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ujianakhir.model.Hewan
+import com.example.ujianakhir.model.JenisHewan
 import com.example.ujianakhir.repository.HewanRepository
+import com.example.ujianakhir.repository.JenisHewanRepository
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class UpdateHewanViewModel(
-    private val hwn: HewanRepository
+    private val hwn: HewanRepository,
+    private val jns: JenisHewanRepository
 ) : ViewModel() {
 
     var hwnuiState by mutableStateOf(UpdateUiState())
         private set
+
+    val jnsListState: StateFlow<List<JenisHewan>> = flow {
+        emit(jns.getJenisHewan())
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
+            initialValue = listOf()
+        )
+
+    var jnsListInsert by mutableStateOf<List<String>>(emptyList())
+        private set
+
+    init {
+        fetchjnsUdpate()
+    }
+
+    fun fetchjnsUdpate(){
+        viewModelScope.launch {
+            try {
+                val jnsList = jns.getJenisHewan()
+                jnsListInsert = jnsList
+                    .map {it.jenishewanid}
+            } catch (e: Exception) {
+                jnsListInsert = emptyList()
+            }
+        }
+    }
 
     fun UpdateHwnState(updateUiEvent: UpdateHwnUiEvent) {
         hwnuiState = hwnuiState.copy(updateUiEvent = updateUiEvent)
