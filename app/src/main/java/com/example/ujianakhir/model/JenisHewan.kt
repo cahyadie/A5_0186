@@ -10,4 +10,3 @@ data class JenisHewan(
     @SerialName("nama_jenis_hewan") val namajenishewan: String,
     val deskripsi: String,
 )
-

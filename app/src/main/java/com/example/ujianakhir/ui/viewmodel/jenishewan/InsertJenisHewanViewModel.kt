@@ -30,7 +30,8 @@ class InsertJenisHewanViewModel(private val jnshwn: JenisHewanRepository) : View
 
 
 data class InsertUiState(
-    val insertUiEvent: InsertUiEvent = InsertUiEvent()
+    val insertUiEvent: InsertUiEvent = InsertUiEvent(),
+    val snackbarMessage: String? = null
 )
 
 data class InsertUiEvent(

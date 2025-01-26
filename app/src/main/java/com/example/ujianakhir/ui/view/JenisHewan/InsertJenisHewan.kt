@@ -28,8 +28,8 @@ import com.example.ujianakhir.ui.widget.CostumeTopAppBar
 import kotlinx.coroutines.launch
 
 object DestinasiEntryJenisHewan : DestinasiNavigasi {
-    override val route = "item_entry"
-    override val titleRes = "Entry Hwn"
+    override val route = "item_entryJenisHewan"
+    override val titleRes = "Insert JenisHewan"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +52,7 @@ fun EntryJnsHwnScreen(
             )
         }
     ){innerPadding ->
-        EntryBody(
+        EntryBodyJenisHewan(
             insertUiState = viewmodel.uiState,
             onJenisHewanValueChange = viewmodel::updtaeInsertJnsHwnState,
             onSaveClick = {
@@ -70,7 +70,7 @@ fun EntryJnsHwnScreen(
 }
 
 @Composable
-fun EntryBody(
+fun EntryBodyJenisHewan(
     insertUiState: InsertUiState,
     onJenisHewanValueChange: (InsertUiEvent) -> Unit,
     onSaveClick: () -> Unit,
