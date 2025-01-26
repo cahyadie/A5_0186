@@ -31,6 +31,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,7 +57,6 @@ object DestinasiHomeDokter : DestinasiNavigasi {
 fun HomeScreenDokter(
     navigateBackDktr: () -> Unit,
     navigateToItemEntry: () -> Unit,
-    navigateToEntryPrwt: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
     viewModel: HomeDokterViewModel = viewModel(factory = PenyediaViewModel.Factory)
@@ -76,31 +76,15 @@ fun HomeScreenDokter(
             )
         },
         floatingActionButton = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp), // Mengatur jarak dari tepi layar
-                contentAlignment = Alignment.BottomEnd // Menempatkan di kanan bawah
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp), // Jarak horizontal antar tombol
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(bottom = 8.dp) // Mengatur jarak dari bawah
-                ) {
-                    Button(
-                        onClick = navigateToItemEntry,
-                        shape = MaterialTheme.shapes.medium
-                    ) {
-                        Text(text = "Add Dokter")
-                    }
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp),
+                containerColor = Color(0xFF126E6E),
+                contentColor = Color.White
 
-                    Button(
-                        onClick = navigateToEntryPrwt,
-                        shape = MaterialTheme.shapes.medium
-                    ) {
-                        Text(text = "Add Perawatan")
-                    }
-                }
+            ){
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Dokter")
             }
         },
     ){innerPadding ->
