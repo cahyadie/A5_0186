@@ -44,7 +44,7 @@ import com.example.ujianakhir.ui.widget.CostumeTopAppBar
 
 object DestinasiHomePerawatan : DestinasiNavigasi {
     override val route = "home_perawatan"
-    override val titleRes = "Daftar Perawatan"
+    override val titleRes = "Riwayat Kesehatan"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
